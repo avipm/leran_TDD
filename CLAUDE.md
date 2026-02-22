@@ -13,19 +13,27 @@ All commands are run from a chapter's module directory (e.g., `TDD_Book/chapter1
 ```bash
 make          # Build the test runner
 make run      # Build and run all tests
-make clean    # Remove build artifacts
+make clean    # Remove build artifacts (only removes test_runner — no object files)
 ./test_runner # Run tests directly after building
 ```
 
+**Run a specific test group or test:**
+```bash
+./test_runner -g LedDriver           # Run all tests in the LedDriver group
+./test_runner -t TurnOnLedOne        # Run tests matching name
+./test_runner -v                     # Verbose output (show each test name)
+```
+
 **Dependencies:**
-- CppUTest installed at `C:/Users/avila/cpputest` (hardcoded in Makefiles)
-- GCC/G++ compiler
+- CppUTest installed via MSYS2: `pacman -S mingw-w64-ucrt-x86_64-cpputest` (installed at `C:/msys64/ucrt64`)
+- GCC/G++ from MSYS2 ucrt64 — requires `/c/msys64/ucrt64/bin` in PATH (added to `~/.bashrc`)
+- `CPPUTEST_HOME := C:/msys64/ucrt64` in Makefiles
 
 ## Architecture
 
 ### Project Layout
 
-Each chapter contains one or more modules following this structure:
+Each chapter contains one or more modules:
 
 ```
 TDD_Book/
@@ -37,24 +45,84 @@ TDD_Book/
         └── Makefile
 ```
 
-### TDD Pattern Used
+### Build Model
 
-- Production code is written in **C** (`src/*.c`, `include/*.h`)
-- Tests are written in **C++** (`test/*.cpp`) using CppUTest macros
-- Each test file uses `TEST_GROUP` with `setup()`/`teardown()` methods
-- Tests drive implementation: functions may be declared in headers before being implemented
+The Makefile compiles everything in a **single g++ invocation** (source + test + CppUTest runner). There are no intermediate object files, so `make clean` only removes the `test_runner` binary. New modules copy this same Makefile pattern, updating `SRC` and `TEST_SRC`.
+
+### C/C++ Interop Pattern
+
+C headers use `#ifdef __cplusplus extern "C"` guards so they compile cleanly in both C and C++ translation units. Test files include C headers directly; the guard in the header handles linkage. Example from `LedDriver.h`:
+
+```c
+#ifdef __cplusplus
+extern "C" {
+#endif
+// C declarations here
+#ifdef __cplusplus
+}
+#endif
+```
+
+### TDD Workflow
+
+Follow the strict red → green → refactor cycle the book prescribes:
+1. **Red** — write one failing test; it must compile but fail
+2. **Green** — write the *minimum* code to make it pass (even a hardcoded return is valid)
+3. **Refactor** — clean up without breaking tests
+
+When helping with implementation, only implement enough to pass the current failing test. Do not implement functions that have no tests yet.
+
+### Scaffolding a New Module
+
+To start a new chapter module (e.g., `TDD_Book/chapter2/circular_buffer/`):
+
+```bash
+mkdir -p TDD_Book/chapter2/circular_buffer/{include,src,test}
+cp TDD_Book/chapter1/tdd_led/Makefile TDD_Book/chapter2/circular_buffer/Makefile
+```
+
+Then edit the new Makefile: update `SRC` and `TEST_SRC` to point to the new module's files.
+
+Every module needs a `test/AllTests.cpp` entry point (the installed CppUTest library does not include a `main()`):
+
+```cpp
+#include "CppUTest/CommandLineTestRunner.h"
+
+int main(int argc, char** argv)
+{
+    return CommandLineTestRunner::RunAllTests(argc, argv);
+}
+```
 
 ### CppUTest Conventions
 
-- `TEST_GROUP(GroupName) { ... }` defines a test fixture with setup/teardown
-- `TEST(GroupName, TestName) { ... }` defines individual tests
-- `CHECK_EQUAL(expected, actual)` is the primary assertion macro
-- The test runner is a compiled executable (`test_runner`) — there is no test discovery via external tools
+**Assertions:**
+- `CHECK(condition)` — true/false check
+- `CHECK_EQUAL(expected, actual)` — generic equality (uses `==`)
+- `LONGS_EQUAL(expected, actual)` — integer equality with better failure messages
+- `DOUBLES_EQUAL(expected, actual, tolerance)` — floating point comparison
+- `STRCMP_EQUAL(expected, actual)` — C string comparison
+- `POINTERS_EQUAL(expected, actual)` — pointer comparison
+- `FAIL("message")` — unconditional failure (use as a placeholder for unwritten code)
+
+**Test control:**
+- `IGNORE_TEST(Group, Name) { ... }` — skips the test but reports it as ignored (use while writing the next test)
+- `TEST_GROUP(GroupName) { ... }` — fixture with `setup()`/`teardown()` methods
+- `setup()` runs before each test; always initialize the module under test here
+
+**Pattern:** Tests use a local variable (e.g., `uint16_t virtualLeds`) as a fake hardware register, passed to the module's `_Create` function in `setup()`.
+
+### Test Doubles (Book Vocabulary)
+
+The book uses these terms — understand the distinction when the book introduces each:
+- **Fake** — simplified working implementation (e.g., a local variable standing in for a hardware register)
+- **Stub** — returns hard-coded canned values; used to control indirect inputs
+- **Spy** — records calls so the test can verify them afterward
+- **Mock** — pre-programmed with expectations; verifies interactions automatically
 
 ### Current Modules
 
 **`TDD_Book/chapter1/tdd_led/`** — LED driver for a 16-bit hardware register
-- `LedDriver_Create(uint16_t* address)` — binds the driver to a memory-mapped register and clears all LEDs
-- `LedDriver_TurnOn(int ledNumber)` — sets the bit for the given LED (1-indexed, mapped to bit `ledNumber - 1`)
-- `LedDriver_TurnOff(int ledNumber)` — declared but not yet implemented
-- Tests use a local `uint16_t` variable as a fake hardware register
+- `LedDriver_Create(uint16_t* address)` — binds driver to a memory-mapped register and clears all LEDs
+- `LedDriver_TurnOn(int ledNumber)` — sets bit for the given LED (1-indexed → bit `ledNumber - 1`)
+- `LedDriver_TurnOff(int ledNumber)` — declared in header, not yet implemented

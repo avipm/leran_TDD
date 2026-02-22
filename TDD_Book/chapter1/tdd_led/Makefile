@@ -1,24 +1,21 @@
-CPPUTEST_HOME := C:/Users/avila/cpputest
-CPPUTEST_BUILD := C:/Users/avila/cpputest/build
+CPPUTEST_HOME := C:/msys64/ucrt64
 
 CPPFLAGS := -Iinclude \
             -I$(CPPUTEST_HOME)/include
 
 CXXFLAGS := -g -Wall
 
-LDFLAGS := -L$(CPPUTEST_BUILD)/src/CppUTest \
-           -L$(CPPUTEST_BUILD)/src/CppUTestExt \
+LDFLAGS := -L$(CPPUTEST_HOME)/lib \
            -lCppUTest \
            -lCppUTestExt
 
 SRC := src/LedDriver.c
-TEST_SRC := test/LedDriverTest.cpp
-RUNNER := $(CPPUTEST_HOME)/src/CppUTest/CommandLineTestRunner.cpp
+TEST_SRC := test/LedDriverTest.cpp test/AllTests.cpp
 
 all: test_runner
 
 test_runner:
-	g++ $(CPPFLAGS) $(CXXFLAGS) $(SRC) $(TEST_SRC) $(RUNNER) $(LDFLAGS) -o test_runner
+	g++ $(CPPFLAGS) $(CXXFLAGS) $(SRC) $(TEST_SRC) $(LDFLAGS) -o test_runner
 
 run: test_runner
 	./test_runner

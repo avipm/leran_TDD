@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(g++:*)",
+      "Bash(gcc:*)",
+      "Bash(pacman -Ss:*)",
+      "Bash(pacman:*)",
+      "Bash(make run:*)",
+      "Bash(echo:*)",
+      "Bash(1:*)",
+      "Bash(tee:*)",
+      "Bash(export PATH=\"/c/msys64/ucrt64/bin:$PATH\")",
+      "Bash(/tmp/hello.exe:*)"
+    ]
+  }
+}
