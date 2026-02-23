@@ -1,0 +1,27 @@
+name: Run Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CppUTest
+        run: sudo apt-get install -y libcpputest-dev
+
+      - name: Chapter 1 — LED Driver
+        run: make run CPPUTEST_HOME=/usr
+        working-directory: TDD_Book/chapter1/tdd_led
+
+      - name: Chapter 2 — sprintf
+        run: make run CPPUTEST_HOME=/usr
+        working-directory: TDD_Book/chapter2/sprintf_test
+
+      - name: Chapter 3 — LED Driver
+        run: make run CPPUTEST_HOME=/usr
+        working-directory: TDD_Book/chapter3
