@@ -1,0 +1,26 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "Review this pull request. Focus on: correct CppUTest macro usage, TDD discipline (minimum code to pass tests, no untested code), C/C++ interop patterns (extern C guards), and anything that would break the build."
+          claude_args: "--model claude-sonnet-4-6 --max-turns 5"
