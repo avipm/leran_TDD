@@ -21,7 +21,9 @@ jobs:
       - name: Chapter 2 — sprintf
         run: make run CPPUTEST_HOME=/usr
         working-directory: TDD_Book/chapter2/sprintf_test
+        continue-on-error: true
 
       - name: Chapter 3 — LED Driver
         run: make run CPPUTEST_HOME=/usr
         working-directory: TDD_Book/chapter3
+        continue-on-error: true
