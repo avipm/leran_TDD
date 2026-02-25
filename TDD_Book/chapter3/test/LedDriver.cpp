@@ -28,3 +28,21 @@ TEST(LedDriver, LedDriver_TurnOnAllLed){
     LedDriver_TurnOnAll(allLeds);
     LONGS_EQUAL(0xFFFF, virtualLeds);
 }
+
+TEST(LedDriver, LedDriver_getLedStatus){
+    LedDriver_Create(&virtualLeds);
+    uint16_t ledStatus;
+    uint16_t allLeds = 0xFFFF;
+    LedDriver_TurnOnAll(allLeds);
+    LedDriver_getLedStatus(&ledStatus);
+    LONGS_EQUAL(allLeds, ledStatus);
+}
+
+TEST(LedDriver, LedDriver_TurnOnSpecificLed){
+    uint8_t ledNumberToTurnOn = 5;
+    uint16_t ledStatus, currentLedStatus;
+    LedDriver_getLedStatus(&ledStatus);
+    LedDriver_TurnOnSpecificLed(ledNumberToTurnOn);
+    LedDriver_getLedStatus(&currentLedStatus);
+    CHECK_EQUAL(ledStatus | (1U << (ledNumberToTurnOn - 1)), currentLedStatus);
+}
