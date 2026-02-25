@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 void LedDriver_Create(uint16_t* address);
+void LedDriver_TurnOnAll(uint16_t allLEDS);
 
 #ifdef __cplusplus
 }
