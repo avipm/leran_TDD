@@ -1,0 +1,144 @@
+\doxysection{include/\+\+Led\+\_\+\+Driver.h File Reference}
+\hypertarget{_led___driver_8h}{}\label{_led___driver_8h}\index{include/Led\_Driver.h@{include/Led\_Driver.h}}
+
+
+LED driver for a 16-\/bit memory-\/mapped LED register.  
+
+
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a5589a3d5ed31d1191ba2d3fc1c0ec3a6}{Led\+Driver\+\_\+\+Create}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}address)
+\begin{DoxyCompactList}\small\item\em Initializes the LED driver and turns off all LEDs. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a2f9c532c0e260c6365caf021c2c252f6}{Led\+Driver\+\_\+\+Turn\+On\+All}} (uint16\+\_\+t all\+LEDS)
+\begin{DoxyCompactList}\small\item\em Sets all 16 LEDs to the given value. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_add351d1ece6a9261d427873797f036c3}{Led\+Driver\+\_\+get\+Led\+Status}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}led\+Status)
+\begin{DoxyCompactList}\small\item\em Reads the current state of the LED register. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a88ba5ee8184807311914146b81c2d616}{Led\+Driver\+\_\+\+Turn\+On\+Specific\+Led}} (uint8\+\_\+t led\+Number\+To\+Turn\+On)
+\begin{DoxyCompactList}\small\item\em Turns on a single LED without affecting others. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a0d67fb136d6d6594dae0569e0654acbc}{Led\+Driver\+\_\+\+Turn\+Off\+Specific\+Led}} (uint8\+\_\+t led\+Number\+To\+Turn\+Off)
+\begin{DoxyCompactList}\small\item\em Turns off a single LED without affecting others. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a08abb401fda3c894aab1cfb17cb48c8b}{Led\+Driver\+\_\+\+Turn\+On\+Multiple\+Led}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}leds\+Numbers, uint8\+\_\+t leds\+Counts)
+\begin{DoxyCompactList}\small\item\em Turns on multiple LEDs. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{_led___driver_8h_a8712ad8472db59037641b526a4eb9546}{Led\+Driver\+\_\+\+Turn\+Off\+Multiple\+Led}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}leds\+Numbers, uint8\+\_\+t leds\+Count)
+\begin{DoxyCompactList}\small\item\em Turns off multiple LEDs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+LED driver for a 16-\/bit memory-\/mapped LED register. 
+
+LEDs are numbered 1–16 (1-\/indexed). LED N maps to bit (N-\/1) of the register. 
+
+\label{doc-func-members}
+\Hypertarget{_led___driver_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_led___driver_8h_a5589a3d5ed31d1191ba2d3fc1c0ec3a6}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_Create@{LedDriver\_Create}}
+\index{LedDriver\_Create@{LedDriver\_Create}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_Create()}{LedDriver\_Create()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a5589a3d5ed31d1191ba2d3fc1c0ec3a6} 
+void Led\+Driver\+\_\+\+Create (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{address}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the LED driver and turns off all LEDs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Pointer to the 16-\/bit memory-\/mapped LED register. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_add351d1ece6a9261d427873797f036c3}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_getLedStatus@{LedDriver\_getLedStatus}}
+\index{LedDriver\_getLedStatus@{LedDriver\_getLedStatus}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_getLedStatus()}{LedDriver\_getLedStatus()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_add351d1ece6a9261d427873797f036c3} 
+void Led\+Driver\+\_\+get\+Led\+Status (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{led\+Status}{}\end{DoxyParamCaption})}
+
+
+
+Reads the current state of the LED register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em led\+Status} & Output pointer; receives the current register value. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_a8712ad8472db59037641b526a4eb9546}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_TurnOffMultipleLed@{LedDriver\_TurnOffMultipleLed}}
+\index{LedDriver\_TurnOffMultipleLed@{LedDriver\_TurnOffMultipleLed}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_TurnOffMultipleLed()}{LedDriver\_TurnOffMultipleLed()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a8712ad8472db59037641b526a4eb9546} 
+void Led\+Driver\+\_\+\+Turn\+Off\+Multiple\+Led (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{leds\+Numbers}{, }\item[{uint8\+\_\+t}]{leds\+Count}{}\end{DoxyParamCaption})}
+
+
+
+Turns off multiple LEDs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em leds\+Numbers} & Array of LED numbers to turn off (1–16 each). \\
+\hline
+{\em leds\+Count} & Number of entries in leds\+Numbers. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_a0d67fb136d6d6594dae0569e0654acbc}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_TurnOffSpecificLed@{LedDriver\_TurnOffSpecificLed}}
+\index{LedDriver\_TurnOffSpecificLed@{LedDriver\_TurnOffSpecificLed}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_TurnOffSpecificLed()}{LedDriver\_TurnOffSpecificLed()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a0d67fb136d6d6594dae0569e0654acbc} 
+void Led\+Driver\+\_\+\+Turn\+Off\+Specific\+Led (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{led\+Number\+To\+Turn\+Off}{}\end{DoxyParamCaption})}
+
+
+
+Turns off a single LED without affecting others. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em led\+Number\+To\+Turn\+Off} & LED number to turn off (1–16). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_a2f9c532c0e260c6365caf021c2c252f6}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_TurnOnAll@{LedDriver\_TurnOnAll}}
+\index{LedDriver\_TurnOnAll@{LedDriver\_TurnOnAll}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_TurnOnAll()}{LedDriver\_TurnOnAll()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a2f9c532c0e260c6365caf021c2c252f6} 
+void Led\+Driver\+\_\+\+Turn\+On\+All (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{all\+LEDS}{}\end{DoxyParamCaption})}
+
+
+
+Sets all 16 LEDs to the given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em all\+LEDS} & Bitmask to write directly to the LED register (0x\+FFFF = all on). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_a08abb401fda3c894aab1cfb17cb48c8b}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_TurnOnMultipleLed@{LedDriver\_TurnOnMultipleLed}}
+\index{LedDriver\_TurnOnMultipleLed@{LedDriver\_TurnOnMultipleLed}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_TurnOnMultipleLed()}{LedDriver\_TurnOnMultipleLed()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a08abb401fda3c894aab1cfb17cb48c8b} 
+void Led\+Driver\+\_\+\+Turn\+On\+Multiple\+Led (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{leds\+Numbers}{, }\item[{uint8\+\_\+t}]{leds\+Counts}{}\end{DoxyParamCaption})}
+
+
+
+Turns on multiple LEDs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em leds\+Numbers} & Array of LED numbers to turn on (1–16 each). \\
+\hline
+{\em leds\+Counts} & Number of entries in leds\+Numbers. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_led___driver_8h_a88ba5ee8184807311914146b81c2d616}\index{Led\_Driver.h@{Led\_Driver.h}!LedDriver\_TurnOnSpecificLed@{LedDriver\_TurnOnSpecificLed}}
+\index{LedDriver\_TurnOnSpecificLed@{LedDriver\_TurnOnSpecificLed}!Led\_Driver.h@{Led\_Driver.h}}
+\doxysubsubsection{\texorpdfstring{LedDriver\_TurnOnSpecificLed()}{LedDriver\_TurnOnSpecificLed()}}
+{\footnotesize\ttfamily \label{_led___driver_8h_a88ba5ee8184807311914146b81c2d616} 
+void Led\+Driver\+\_\+\+Turn\+On\+Specific\+Led (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{led\+Number\+To\+Turn\+On}{}\end{DoxyParamCaption})}
+
+
+
+Turns on a single LED without affecting others. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em led\+Number\+To\+Turn\+On} & LED number to turn on (1–16). \\
+\hline
+\end{DoxyParams}

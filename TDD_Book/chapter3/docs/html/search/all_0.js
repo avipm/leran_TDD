@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['led_5fdriver_2ec_0',['Led_Driver.c',['../_led___driver_8c.html',1,'']]],
+  ['led_5fdriver_2eh_1',['Led_Driver.h',['../_led___driver_8h.html',1,'']]],
+  ['leddriver_5fcreate_2',['LedDriver_Create',['../_led___driver_8h.html#a5589a3d5ed31d1191ba2d3fc1c0ec3a6',1,'LedDriver_Create(uint16_t *address):&#160;Led_Driver.c'],['../_led___driver_8c.html#a5589a3d5ed31d1191ba2d3fc1c0ec3a6',1,'LedDriver_Create(uint16_t *address):&#160;Led_Driver.c']]],
+  ['leddriver_5fgetledstatus_3',['LedDriver_getLedStatus',['../_led___driver_8h.html#add351d1ece6a9261d427873797f036c3',1,'LedDriver_getLedStatus(uint16_t *ledStatus):&#160;Led_Driver.c'],['../_led___driver_8c.html#add351d1ece6a9261d427873797f036c3',1,'LedDriver_getLedStatus(uint16_t *ledStatus):&#160;Led_Driver.c']]],
+  ['leddriver_5fturnoffmultipleled_4',['LedDriver_TurnOffMultipleLed',['../_led___driver_8h.html#a8712ad8472db59037641b526a4eb9546',1,'LedDriver_TurnOffMultipleLed(uint8_t *ledsNumbers, uint8_t ledsCount):&#160;Led_Driver.c'],['../_led___driver_8c.html#a8712ad8472db59037641b526a4eb9546',1,'LedDriver_TurnOffMultipleLed(uint8_t *ledsNumbers, uint8_t ledsCount):&#160;Led_Driver.c']]],
+  ['leddriver_5fturnoffspecificled_5',['LedDriver_TurnOffSpecificLed',['../_led___driver_8h.html#a0d67fb136d6d6594dae0569e0654acbc',1,'LedDriver_TurnOffSpecificLed(uint8_t ledNumberToTurnOff):&#160;Led_Driver.c'],['../_led___driver_8c.html#a0d67fb136d6d6594dae0569e0654acbc',1,'LedDriver_TurnOffSpecificLed(uint8_t ledNumberToTurnOff):&#160;Led_Driver.c']]],
+  ['leddriver_5fturnonall_6',['LedDriver_TurnOnAll',['../_led___driver_8h.html#a2f9c532c0e260c6365caf021c2c252f6',1,'LedDriver_TurnOnAll(uint16_t allLEDS):&#160;Led_Driver.c'],['../_led___driver_8c.html#a2f9c532c0e260c6365caf021c2c252f6',1,'LedDriver_TurnOnAll(uint16_t allLEDS):&#160;Led_Driver.c']]],
+  ['leddriver_5fturnonmultipleled_7',['LedDriver_TurnOnMultipleLed',['../_led___driver_8h.html#a08abb401fda3c894aab1cfb17cb48c8b',1,'LedDriver_TurnOnMultipleLed(uint8_t *ledsNumbers, uint8_t ledsCounts):&#160;Led_Driver.c'],['../_led___driver_8c.html#a8897b8c8a4e3f030242e79fc58885c77',1,'LedDriver_TurnOnMultipleLed(uint8_t *ledsNumbers, uint8_t ledsCount):&#160;Led_Driver.c']]],
+  ['leddriver_5fturnonspecificled_8',['LedDriver_TurnOnSpecificLed',['../_led___driver_8h.html#a88ba5ee8184807311914146b81c2d616',1,'LedDriver_TurnOnSpecificLed(uint8_t ledNumberToTurnOn):&#160;Led_Driver.c'],['../_led___driver_8c.html#a88ba5ee8184807311914146b81c2d616',1,'LedDriver_TurnOnSpecificLed(uint8_t ledNumberToTurnOn):&#160;Led_Driver.c']]]
+];
