@@ -18,7 +18,7 @@ jobs:
       - name: Run all chapter tests
         run: |
           failed=0
-          for makefile in $(find TDD_Book -name Makefile | sort); do
+          for makefile in $(find TDD_Book -name Makefile -not -path "*/latex/*" -not -path "*/docs/*" | sort); do
             dir=$(dirname "$makefile")
             echo "=== Testing: $dir ==="
             make -C "$dir" run CPPUTEST_HOME=/usr || failed=1
