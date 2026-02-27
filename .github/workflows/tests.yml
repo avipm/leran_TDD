@@ -14,7 +14,6 @@ jobs:
 
       - name: Install CppUTest
         run: sudo apt-get install -y libcpputest-dev
-
       - name: Run all chapter tests
         run: |
           failed=0
