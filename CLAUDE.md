@@ -29,21 +29,31 @@ make clean    # Remove build artifacts (only removes test_runner — no object f
 - GCC/G++ from MSYS2 ucrt64 — requires `/c/msys64/ucrt64/bin` in PATH (added to `~/.bashrc`)
 - `CPPUTEST_HOME := C:/msys64/ucrt64` in Makefiles
 
+## CI/CD
+
+**GitHub Actions** (`.github/workflows/`):
+- `tests.yml` — runs on every push and PR; auto-discovers all Makefiles under `TDD_Book/` using `find` and runs `make run CPPUTEST_HOME=/usr` in each. All chapters run even if one fails; the job fails at the end if any chapter did.
+- `claude-review.yml` — triggers on PR open/update and `@claude` comments; uses `anthropics/claude-code-action@v1` with `ANTHROPIC_API_KEY` repository secret. Requires `id-token: write` permission.
+
+**Pre-push hook** (local, blocks push if tests fail):
+```bash
+cp scripts/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+```
+
 ## Architecture
 
 ### Project Layout
 
-Each chapter contains one or more modules:
+Chapters 1 and 2 each contain a named module subdirectory. Chapter 3 currently sits directly under `chapter3/` without a subdirectory (no module subdirectory):
 
 ```
 TDD_Book/
-└── chapterN/
-    └── <module_name>/
-        ├── include/      # Public C headers (.h)
-        ├── src/          # C implementation files (.c)
-        ├── test/         # C++ test files using CppUTest (.cpp)
-        └── Makefile
+├── chapter1/tdd_led/        # named module subdirectory
+├── chapter2/sprintf_test/   # named module subdirectory
+└── chapter3/                # Makefile lives directly here (no subdirectory)
 ```
+
+Each module has `include/`, `src/`, `test/`, and `Makefile`.
 
 ### Build Model
 
@@ -51,7 +61,7 @@ The Makefile compiles everything in a **single g++ invocation** (source + test +
 
 ### C/C++ Interop Pattern
 
-C headers use `#ifdef __cplusplus extern "C"` guards so they compile cleanly in both C and C++ translation units. Test files include C headers directly; the guard in the header handles linkage. Example from `LedDriver.h`:
+C headers use `#ifdef __cplusplus extern "C"` guards so they compile cleanly in both C and C++ translation units. Test files include C headers directly; the guard in the header handles linkage:
 
 ```c
 #ifdef __cplusplus
@@ -107,8 +117,8 @@ int main(int argc, char** argv)
 
 **Test control:**
 - `IGNORE_TEST(Group, Name) { ... }` — skips the test but reports it as ignored (use while writing the next test)
-- `TEST_GROUP(GroupName) { ... }` — fixture with `setup()`/`teardown()` methods
-- `setup()` runs before each test; always initialize the module under test here
+- `TEST_GROUP(GroupName) { ... }` — fixture with `setup()` and `teardown()` methods
+- `setup()` runs before each test; `teardown()` runs after — always initialize the module under test in `setup()`
 
 **Pattern:** Tests use a local variable (e.g., `uint16_t virtualLeds`) as a fake hardware register, passed to the module's `_Create` function in `setup()`.
 
@@ -126,3 +136,10 @@ The book uses these terms — understand the distinction when the book introduce
 - `LedDriver_Create(uint16_t* address)` — binds driver to a memory-mapped register and clears all LEDs
 - `LedDriver_TurnOn(int ledNumber)` — sets bit for the given LED (1-indexed → bit `ledNumber - 1`)
 - `LedDriver_TurnOff(int ledNumber)` — declared in header, not yet implemented
+
+**`TDD_Book/chapter2/sprintf_test/`** — exercises CppUTest with standard library `sprintf`
+- Tests cover: plain string output, `%s` interpolation, `%d` interpolation, null termination
+- Uses `teardown()` to clear the output buffer after each test
+
+**`TDD_Book/chapter3/`** — LED driver restart (book re-derives the driver from scratch)
+- Currently has one passing smoke test (`LedsOffAfterCreate`) to keep CI green while the chapter is in progress

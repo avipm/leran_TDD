@@ -53,3 +53,11 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Doxygen generated output
+docs/
+latex/
+Doxyfile.bak
+
+# CppUTest build artifacts
+test_runner

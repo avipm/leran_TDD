@@ -1,0 +1,27 @@
+#!/bin/bash
+# Git pre-push hook: runs all module tests before allowing a push.
+# Install: cp scripts/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+failed=0
+
+for makefile in $(find "$REPO_ROOT/TDD_Book" -name Makefile); do
+    dir=$(dirname "$makefile")
+    module=$(realpath --relative-to="$REPO_ROOT" "$dir")
+    echo "--- Testing: $module ---"
+    if make -C "$dir" run; then
+        echo "PASS: $module"
+    else
+        echo "FAIL: $module"
+        failed=1
+    fi
+    echo ""
+done
+
+if [ $failed -ne 0 ]; then
+    echo "One or more modules failed. Push blocked."
+    exit 1
+fi
+
+echo "All tests passed. Pushing..."
+exit 0
